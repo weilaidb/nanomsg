@@ -57,6 +57,15 @@ static void *nn_chunk_getdata (struct nn_chunk *c);
 static void nn_chunk_default_free (void *p);
 static size_t nn_chunk_hdrsize ();
 
+/*============================================
+* FuncName    : nn_chunk_alloc
+* Description : 
+* @size       : 
+* @type       : 
+* @result     : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 int nn_chunk_alloc (size_t size, int type, void **result)
 {
     size_t sz;
@@ -95,6 +104,14 @@ int nn_chunk_alloc (size_t size, int type, void **result)
     return 0;
 }
 
+/*============================================
+* FuncName    : nn_chunk_realloc
+* Description : 
+* @size       : 
+* @chunk      : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 int nn_chunk_realloc (size_t size, void **chunk)
 {
     struct nn_chunk *self;
@@ -143,6 +160,13 @@ int nn_chunk_realloc (size_t size, void **chunk)
     return 0;
 }
 
+/*============================================
+* FuncName    : nn_chunk_free
+* Description : 
+* @p          : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 void nn_chunk_free (void *p)
 {
     struct nn_chunk *self;
@@ -165,6 +189,14 @@ void nn_chunk_free (void *p)
     }
 }
 
+/*============================================
+* FuncName    : nn_chunk_addref
+* Description : 
+* @p          : 
+* @n          : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 void nn_chunk_addref (void *p, uint32_t n)
 {
     struct nn_chunk *self;
@@ -175,11 +207,26 @@ void nn_chunk_addref (void *p, uint32_t n)
 }
 
 
+/*============================================
+* FuncName    : nn_chunk_size
+* Description : 
+* @p          : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 size_t nn_chunk_size (void *p)
 {
     return nn_chunk_getptr (p)->size;
 }
 
+/*============================================
+* FuncName    : nn_chunk_trim
+* Description : 
+* @p          : 
+* @n          : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 void *nn_chunk_trim (void *p, size_t n)
 {
     struct nn_chunk *self;
@@ -204,6 +251,13 @@ void *nn_chunk_trim (void *p, size_t n)
     return p;
 }
 
+/*============================================
+* FuncName    : nn_chunk_getptr
+* Description : 
+* @p          : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 static struct nn_chunk *nn_chunk_getptr (void *p)
 {
     uint32_t off;
@@ -215,18 +269,41 @@ static struct nn_chunk *nn_chunk_getptr (void *p)
         sizeof (struct nn_chunk));
 }
 
+/*============================================
+* FuncName    : nn_chunk_getdata
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 static void *nn_chunk_getdata (struct nn_chunk *self)
 {
     return ((uint8_t*) (self + 1)) + 2 * sizeof (uint32_t);
 }
 
+/*============================================
+* FuncName    : nn_chunk_default_free
+* Description : 
+* @p          : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 static void nn_chunk_default_free (void *p)
 {
     nn_free (p);
 }
 
+/*============================================
+* FuncName    : nn_chunk_hdrsize
+* Description : 
+* @           : 
+* Author      : 
+* Time        : 2017-06-01
+============================================*/
 static size_t nn_chunk_hdrsize ()
 {
     return sizeof (struct nn_chunk) + 2 * sizeof (uint32_t);
 }
+
+
 
