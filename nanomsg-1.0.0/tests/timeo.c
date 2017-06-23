@@ -68,7 +68,8 @@ int main ()
     showmlogall();
     int color = 100;
     printf("\033[7m%dHello, world.\033[0m", color);
-
+    const char * filewithpath = "./mlog.all.txt";
+    savemlog2fileall(filewithpath);
     return 0;
 }
 
