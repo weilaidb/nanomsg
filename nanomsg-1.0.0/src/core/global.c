@@ -169,16 +169,37 @@ static int nn_global_hold_socket (struct nn_sock **sockp, int s);
 static int nn_global_hold_socket_locked (struct nn_sock **sockp, int s);
 static void nn_global_rele_socket(struct nn_sock *);
 
+/*============================================
+* FuncName    : nn_errno
+* Description : 
+* @--         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_errno (void)
 {
     return nn_err_errno ();
 }
 
+/*============================================
+* FuncName    : nn_strerror
+* Description : 
+* @errnum     : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 const char *nn_strerror (int errnum)
 {
     return nn_err_strerror (errnum);
 }
 
+/*============================================
+* FuncName    : nn_global_init
+* Description : 全局变量初始化
+* @--         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 static void nn_global_init (void)
 {
     int i;
@@ -291,6 +312,13 @@ static void nn_global_init (void)
     nn_pool_init (&self.pool);
 }
 
+/*============================================
+* FuncName    : nn_global_term
+* Description : 
+* @--         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 static void nn_global_term (void)
 {
 #if defined NN_HAVE_WINDOWS
@@ -339,6 +367,13 @@ static void nn_global_term (void)
 #endif
 }
 
+/*============================================
+* FuncName    : nn_term
+* Description : 
+* @--         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_term (void)
 {
     int i;
@@ -360,6 +395,13 @@ void nn_term (void)
     nn_mutex_unlock (&self.lock);
 }
 
+/*============================================
+* FuncName    : nn_init
+* Description : 
+* @--         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_init (void)
 {
     nn_mutex_lock (&self.lock);
@@ -371,6 +413,14 @@ void nn_init (void)
     nn_mutex_unlock (&self.lock);
 }
 
+/*============================================
+* FuncName    : nn_allocmsg
+* Description : 
+* @size       : 
+* @type       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void *nn_allocmsg (size_t size, int type)
 {
     int rc;
@@ -383,6 +433,14 @@ void *nn_allocmsg (size_t size, int type)
     return NULL;
 }
 
+/*============================================
+* FuncName    : nn_reallocmsg
+* Description : 
+* @msg        : 
+* @size       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void *nn_reallocmsg (void *msg, size_t size)
 {
     int rc;
@@ -394,12 +452,27 @@ void *nn_reallocmsg (void *msg, size_t size)
     return NULL;
 }
 
+/*============================================
+* FuncName    : nn_freemsg
+* Description : 
+* @msg        : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_freemsg (void *msg)
 {
     nn_chunk_free (msg);
     return 0;
 }
 
+/*============================================
+* FuncName    : nn_cmsg_nxthdr_
+* Description : 
+* @mhdr       : 
+* @cmsg       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 struct nn_cmsghdr *nn_cmsg_nxthdr_ (const struct nn_msghdr *mhdr,
     const struct nn_cmsghdr *cmsg)
 {
@@ -431,7 +504,14 @@ struct nn_cmsghdr *nn_cmsg_nxthdr_ (const struct nn_msghdr *mhdr,
     if (!cmsg)
         next = (struct nn_cmsghdr*) data;
     else
-        next = (struct nn_cmsghdr*)
+/*============================================
+* FuncName    : =
+* Description : 
+* @nn_cmsghdr  : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
+next = (struct nn_cmsghdr*)
             (((char*) cmsg) + NN_CMSG_ALIGN_ (cmsg->cmsg_len));
 
     /*  If there's no space for next property, treat it as the end
@@ -445,6 +525,14 @@ struct nn_cmsghdr *nn_cmsg_nxthdr_ (const struct nn_msghdr *mhdr,
     return next;
 }
 
+/*============================================
+* FuncName    : nn_global_create_socket
+* Description : 产生一个socket，比较巧妙哦
+* @domain     : 
+* @protocol   : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_global_create_socket (int domain, int protocol)
 {
     int rc;
@@ -492,6 +580,13 @@ int nn_global_create_socket (int domain, int protocol)
     return -EINVAL;
 }
 
+/*============================================
+* FuncName    : nn_lib_init
+* Description : 
+* @--         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 static void nn_lib_init(void)
 {
     /*  This function is executed once to initialize global locks. */
@@ -499,6 +594,14 @@ static void nn_lib_init(void)
     nn_condvar_init (&self.cond);
 }
 
+/*============================================
+* FuncName    : nn_socket
+* Description : 
+* @domain     : 
+* @protocol   : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_socket (int domain, int protocol)
 {
     int rc;
@@ -533,6 +636,13 @@ int nn_socket (int domain, int protocol)
     return rc;
 }
 
+/*============================================
+* FuncName    : nn_close
+* Description : 
+* @s          : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_close (int s)
 {
     int rc;
@@ -584,6 +694,17 @@ int nn_close (int s)
     return 0;
 }
 
+/*============================================
+* FuncName    : nn_setsockopt
+* Description : 
+* @s          : 
+* @level      : 
+* @option     : 
+* @optval     : 
+* @optvallen  : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_setsockopt (int s, int level, int option, const void *optval,
     size_t optvallen)
 {
@@ -614,6 +735,17 @@ fail:
     return -1;
 }
 
+/*============================================
+* FuncName    : nn_getsockopt
+* Description : 
+* @s          : 
+* @level      : 
+* @option     : 
+* @optval     : 
+* @optvallen  : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_getsockopt (int s, int level, int option, void *optval,
     size_t *optvallen)
 {
@@ -644,6 +776,14 @@ fail:
     return -1;
 }
 
+/*============================================
+* FuncName    : nn_bind
+* Description : 
+* @s          : 
+* @addr       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_bind (int s, const char *addr)
 {
     int rc;
@@ -666,6 +806,14 @@ int nn_bind (int s, const char *addr)
     return rc;
 }
 
+/*============================================
+* FuncName    : nn_connect
+* Description : 
+* @s          : 
+* @addr       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_connect (int s, const char *addr)
 {
     int rc;
@@ -688,6 +836,14 @@ int nn_connect (int s, const char *addr)
     return rc;
 }
 
+/*============================================
+* FuncName    : nn_shutdown
+* Description : 
+* @s          : 
+* @how        : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_shutdown (int s, int how)
 {
     int rc;
@@ -711,6 +867,16 @@ int nn_shutdown (int s, int how)
     return 0;
 }
 
+/*============================================
+* FuncName    : nn_send
+* Description : 
+* @s          : 
+* @buf        : 
+* @len        : 
+* @flags      : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_send (int s, const void *buf, size_t len, int flags)
 {
     struct nn_iovec iov;
@@ -727,6 +893,16 @@ int nn_send (int s, const void *buf, size_t len, int flags)
     return nn_sendmsg (s, &hdr, flags);
 }
 
+/*============================================
+* FuncName    : nn_recv
+* Description : 
+* @s          : 
+* @buf        : 
+* @len        : 
+* @flags      : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_recv (int s, void *buf, size_t len, int flags)
 {
     struct nn_iovec iov;
@@ -743,6 +919,15 @@ int nn_recv (int s, void *buf, size_t len, int flags)
     return nn_recvmsg (s, &hdr, flags);
 }
 
+/*============================================
+* FuncName    : nn_sendmsg
+* Description : 
+* @s          : 
+* @msghdr     : 
+* @flags      : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_sendmsg (int s, const struct nn_msghdr *msghdr, int flags)
 {
     int rc;
@@ -883,6 +1068,15 @@ fail:
     return -1;
 }
 
+/*============================================
+* FuncName    : nn_recvmsg
+* Description : 
+* @s          : 
+* @msghdr     : 
+* @flags      : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_recvmsg (int s, struct nn_msghdr *msghdr, int flags)
 {
     int rc;
@@ -1016,6 +1210,14 @@ fail:
     return -1;
 }
 
+/*============================================
+* FuncName    : nn_get_statistic
+* Description : 
+* @s          : 
+* @statistic  : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 uint64_t nn_get_statistic (int s, int statistic)
 {
     int rc;
@@ -1084,6 +1286,13 @@ uint64_t nn_get_statistic (int s, int statistic)
     return val;
 }
 
+/*============================================
+* FuncName    : nn_global_add_transport
+* Description : 
+* @transport  : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 static void nn_global_add_transport (struct nn_transport *transport)
 {
     if (transport->init)
@@ -1092,12 +1301,28 @@ static void nn_global_add_transport (struct nn_transport *transport)
         nn_list_end (&self.transports));
 }
 
+/*============================================
+* FuncName    : nn_global_add_socktype
+* Description : 
+* @socktype   : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 static void nn_global_add_socktype (struct nn_socktype *socktype)
 {
     nn_list_insert (&self.socktypes, &socktype->item,
         nn_list_end (&self.socktypes));
 }
 
+/*============================================
+* FuncName    : nn_global_create_ep
+* Description : 
+* @sock       : 
+* @addr       : 
+* @bind       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 static int nn_global_create_ep (struct nn_sock *sock, const char *addr,
     int bind)
 {
@@ -1146,6 +1371,13 @@ static int nn_global_create_ep (struct nn_sock *sock, const char *addr,
     return rc;
 }
 
+/*============================================
+* FuncName    : nn_global_transport
+* Description : 
+* @id         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 struct nn_transport *nn_global_transport (int id)
 {
     struct nn_transport *tp;
@@ -1165,11 +1397,25 @@ struct nn_transport *nn_global_transport (int id)
     return tp;
 }
 
+/*============================================
+* FuncName    : nn_global_getpool
+* Description : 
+* @           : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 struct nn_pool *nn_global_getpool ()
 {
     return &self.pool;
 }
 
+/*============================================
+* FuncName    : nn_global_print_errors
+* Description : 
+* @           : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_global_print_errors ()
 {
     return self.print_errors;
@@ -1178,6 +1424,14 @@ int nn_global_print_errors ()
 /*  Get the socket structure for a socket id.  This must be called under
     the global lock (self.lock.)  The socket itself will not be freed
     while the hold is active. */
+/*============================================
+* FuncName    : nn_global_hold_socket_locked
+* Description : 
+* @sockp      : 
+* @s          : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_global_hold_socket_locked(struct nn_sock **sockp, int s)
 {
     struct nn_sock *sock;
@@ -1197,6 +1451,14 @@ int nn_global_hold_socket_locked(struct nn_sock **sockp, int s)
     return 0;
 }
 
+/*============================================
+* FuncName    : nn_global_hold_socket
+* Description : 
+* @sockp      : 
+* @s          : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_global_hold_socket(struct nn_sock **sockp, int s)
 {
     int rc;
@@ -1206,9 +1468,17 @@ int nn_global_hold_socket(struct nn_sock **sockp, int s)
     return rc;
 }
 
+/*============================================
+* FuncName    : nn_global_rele_socket
+* Description : 
+* @sock       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_global_rele_socket(struct nn_sock *sock)
 {
     nn_mutex_lock(&self.lock);
     nn_sock_rele(sock);
     nn_mutex_unlock(&self.lock);
 }
+

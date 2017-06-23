@@ -25,17 +25,40 @@
 /*  TODO: The dummy implementation of a thread pool. As for now there's only
     one worker thread created. */
 
+/*============================================
+* FuncName    : nn_pool_init
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_pool_init (struct nn_pool *self)
 {
     return nn_worker_init (&self->worker);
 }
 
+/*============================================
+* FuncName    : nn_pool_term
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_pool_term (struct nn_pool *self)
 {
     nn_worker_term (&self->worker);
 }
 
+/*============================================
+* FuncName    : nn_pool_choose_worker
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 struct nn_worker *nn_pool_choose_worker (struct nn_pool *self)
 {
     return &self->worker;
 }
+
+

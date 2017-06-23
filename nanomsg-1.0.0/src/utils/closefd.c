@@ -29,6 +29,13 @@
 
 #include <unistd.h>
 
+/*============================================
+* FuncName    : nn_closefd
+* Description : 
+* @fd         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_closefd (int fd)
 {
     int rc;
@@ -43,4 +50,5 @@ void nn_closefd (int fd)
 }
 
 #endif
+
 

@@ -1,24 +1,42 @@
-save mlog keys, size:6, done!!
+save mlog keys, size:8, done!!
 [key            ] [count]   [msglen]
 main                 5       8       
+nn_efd_init          9       12      
 nn_global_init       78      1856    
 nn_mutex_init        24      192     
 nn_mutex_term        9       12      
 nn_random_seed       3       8       
+nn_sock_init         3       4       
 nn_socket            4       576     
-show mlog keys, size:6, done!!
-save mlog to file, size:6
+show mlog keys, size:8, done!!
+save mlog to file, size:8
 [main] size:5
 s:0
 timeo:100
 [4mstop watch[0m
-smsg:0xbf839178,len:8
+smsg:0xbfae3978,len:8
 
-9A E0 C7 A0 A3 52 05 00  
-smsg:0xbf839178,len:8;elptime::0  ms
+F4 28 A0 0C A4 52 05 00  
+smsg:0xbfae3978,len:8;elptime::0  ms
+[nn_efd_init] size:9
+[4mself->efd 0[0m
+smsg:0x760ca4,len:4
+
+03 00 00 00 
+smsg:0x760ca4,len:4;elptime::0  ms
+[4mself->efd 0[0m
+smsg:0x90d6aa8,len:4
+
+05 00 00 00 
+smsg:0x90d6aa8,len:4;elptime::0  ms
+[4mself->efd 0[0m
+smsg:0x90d6aac,len:4
+
+06 00 00 00 
+smsg:0x90d6aac,len:4;elptime::0  ms
 [nn_global_init] size:78
 [4mbefore self...[0m
-smsg:0x868c60,len:576
+smsg:0x760c60,len:576
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
@@ -52,16 +70,16 @@ smsg:0x868c60,len:576
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00
-AE 36 00 00 00 00 00 00  01 00 00 00 00 00 00 00
+21 47 00 00 00 00 00 00  01 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 
-smsg:0x868c60,len:576;elptime::0  ms
+smsg:0x760c60,len:576;elptime::0  ms
 [4mafter init self...[0m
-smsg:0x868c60,len:576
+smsg:0x760c60,len:576
 
-00 4A 1F 09 00 52 1F 09  00 00 00 00 00 00 00 00
+00 7A 0D 09 00 82 0D 09  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
@@ -93,234 +111,240 @@ smsg:0x868c60,len:576
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00
-AE 36 00 00 00 00 00 00  01 00 00 00 00 00 00 00
+21 47 00 00 00 00 00 00  01 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 
-smsg:0x868c60,len:576;elptime::0  ms
+smsg:0x760c60,len:576;elptime::0  ms
 [4mnn_inproc[0m
-smsg:0x868b40,len:36
+smsg:0x760b40,len:36
 
-7B 33 86 00 FF FF FF FF  C8 5B 84 00 E5 5B 84 00
-02 5C 84 00 2C 5C 84 00  00 00 00 00 9C 8B 86 00
+5B B4 75 00 FF FF FF FF  64 DC 73 00 81 DC 73 00
+9E DC 73 00 C8 DC 73 00  00 00 00 00 9C 0B 76 00
 00 00 00 00 
-smsg:0x868b40,len:36;elptime::0  ms
+smsg:0x760b40,len:36;elptime::0  ms
 [4mnn_ipc[0m
-smsg:0x868b80,len:36
+smsg:0x760b80,len:36
 
-34 3C 86 00 FE FF FF FF  00 00 00 00 00 00 00 00
-B0 AB 84 00 DA AB 84 00  04 AC 84 00 DC 8B 86 00
-5C 8B 86 00 
-smsg:0x868b80,len:36;elptime::0  ms
+14 BD 75 00 FE FF FF FF  00 00 00 00 00 00 00 00
+4C 2C 74 00 76 2C 74 00  A0 2C 74 00 DC 0B 76 00
+5C 0B 76 00 
+smsg:0x760b80,len:36;elptime::0  ms
 [4mnn_tcp[0m
-smsg:0x868bc0,len:36
+smsg:0x760bc0,len:36
 
-5C 45 86 00 FD FF FF FF  00 00 00 00 00 00 00 00
-10 09 85 00 3A 09 85 00  64 09 85 00 1C 8C 86 00
-9C 8B 86 00 
-smsg:0x868bc0,len:36;elptime::0  ms
+3C C6 75 00 FD FF FF FF  00 00 00 00 00 00 00 00
+AC 89 74 00 D6 89 74 00  00 8A 74 00 1C 0C 76 00
+9C 0B 76 00 
+smsg:0x760bc0,len:36;elptime::0  ms
 [4mnn_ws[0m
-smsg:0x868c00,len:36
+smsg:0x760c00,len:36
 
-B0 51 86 00 FC FF FF FF  00 00 00 00 00 00 00 00
-0C 80 85 00 36 80 85 00  60 80 85 00 00 00 00 00
-DC 8B 86 00 
-smsg:0x868c00,len:36;elptime::0  ms
+90 D2 75 00 FC FF FF FF  00 00 00 00 00 00 00 00
+A8 00 75 00 D2 00 75 00  FC 00 75 00 00 00 00 00
+DC 0B 76 00 
+smsg:0x760c00,len:36;elptime::0  ms
 [4mnn_pair_socktype[0m
-smsg:0x86897c,len:28
+smsg:0x76097c,len:28
 
-01 00 00 00 10 00 00 00  00 00 00 00 1E B4 83 00
-C2 B4 83 00 B0 89 86 00  00 00 00 00 
-smsg:0x86897c,len:28;elptime::0  ms
+01 00 00 00 10 00 00 00  00 00 00 00 BA 34 73 00
+5E 35 73 00 B0 09 76 00  00 00 00 00 
+smsg:0x76097c,len:28;elptime::0  ms
 [4mnn_xpair_socktype[0m
-smsg:0x86899c,len:28
+smsg:0x76099c,len:28
 
-02 00 00 00 10 00 00 00  00 00 00 00 1E B4 83 00
-C2 B4 83 00 D0 89 86 00  90 89 86 00 
-smsg:0x86899c,len:28;elptime::0  ms
+02 00 00 00 10 00 00 00  00 00 00 00 BA 34 73 00
+5E 35 73 00 D0 09 76 00  90 09 76 00 
+smsg:0x76099c,len:28;elptime::0  ms
 [4mnn_pub_socktype[0m
-smsg:0x8689bc,len:28
+smsg:0x7609bc,len:28
 
-01 00 00 00 20 00 00 00  01 00 00 00 2A CE 83 00
-CE CE 83 00 F0 89 86 00  B0 89 86 00 
-smsg:0x8689bc,len:28;elptime::0  ms
+01 00 00 00 20 00 00 00  01 00 00 00 C6 4E 73 00
+6A 4F 73 00 F0 09 76 00  B0 09 76 00 
+smsg:0x7609bc,len:28;elptime::0  ms
 [4mnn_sub_socktype[0m
-smsg:0x8689dc,len:28
+smsg:0x7609dc,len:28
 
-01 00 00 00 21 00 00 00  02 00 00 00 51 D4 83 00
-F5 D4 83 00 10 8A 86 00  D0 89 86 00 
-smsg:0x8689dc,len:28;elptime::0  ms
+01 00 00 00 21 00 00 00  02 00 00 00 ED 54 73 00
+91 55 73 00 10 0A 76 00  D0 09 76 00 
+smsg:0x7609dc,len:28;elptime::0  ms
 [4mnn_xpub_socktype[0m
-smsg:0x8689fc,len:28
+smsg:0x7609fc,len:28
 
-02 00 00 00 20 00 00 00  01 00 00 00 2A CE 83 00
-CE CE 83 00 30 8A 86 00  F0 89 86 00 
-smsg:0x8689fc,len:28;elptime::0  ms
+02 00 00 00 20 00 00 00  01 00 00 00 C6 4E 73 00
+6A 4F 73 00 30 0A 76 00  F0 09 76 00 
+smsg:0x7609fc,len:28;elptime::0  ms
 [4mnn_xsub_socktype[0m
-smsg:0x868a1c,len:28
+smsg:0x760a1c,len:28
 
-02 00 00 00 21 00 00 00  02 00 00 00 51 D4 83 00
-F5 D4 83 00 70 8A 86 00  10 8A 86 00 
-smsg:0x868a1c,len:28;elptime::0  ms
+02 00 00 00 21 00 00 00  02 00 00 00 ED 54 73 00
+91 55 73 00 70 0A 76 00  10 0A 76 00 
+smsg:0x760a1c,len:28;elptime::0  ms
 [4mnn_rep_socktype[0m
-smsg:0x868a5c,len:28
+smsg:0x760a5c,len:28
 
-01 00 00 00 31 00 00 00  00 00 00 00 A6 EF 83 00
-AC F9 83 00 50 8A 86 00  30 8A 86 00 
-smsg:0x868a5c,len:28;elptime::0  ms
+01 00 00 00 31 00 00 00  00 00 00 00 42 70 73 00
+48 7A 73 00 50 0A 76 00  30 0A 76 00 
+smsg:0x760a5c,len:28;elptime::0  ms
 [4mnn_req_socktype[0m
-smsg:0x868a3c,len:28
+smsg:0x760a3c,len:28
 
-01 00 00 00 30 00 00 00  00 00 00 00 F0 EA 83 00
-64 02 84 00 90 8A 86 00  70 8A 86 00 
-smsg:0x868a3c,len:28;elptime::0  ms
+01 00 00 00 30 00 00 00  00 00 00 00 8C 6B 73 00
+00 83 73 00 90 0A 76 00  70 0A 76 00 
+smsg:0x760a3c,len:28;elptime::0  ms
 [4mnn_xrep_socktype[0m
-smsg:0x868a7c,len:28
+smsg:0x760a7c,len:28
 
-02 00 00 00 31 00 00 00  00 00 00 00 08 F9 83 00
-AC F9 83 00 B0 8A 86 00  50 8A 86 00 
-smsg:0x868a7c,len:28;elptime::0  ms
+02 00 00 00 31 00 00 00  00 00 00 00 A4 79 73 00
+48 7A 73 00 B0 0A 76 00  50 0A 76 00 
+smsg:0x760a7c,len:28;elptime::0  ms
 [4mnn_xreq_socktype[0m
-smsg:0x868a9c,len:28
+smsg:0x760a9c,len:28
 
-02 00 00 00 30 00 00 00  00 00 00 00 C0 01 84 00
-64 02 84 00 10 89 86 00  90 8A 86 00 
-smsg:0x868a9c,len:28;elptime::0  ms
+02 00 00 00 30 00 00 00  00 00 00 00 5C 82 73 00
+00 83 73 00 10 09 76 00  90 0A 76 00 
+smsg:0x760a9c,len:28;elptime::0  ms
 [4mnn_push_socktype[0m
-smsg:0x8688fc,len:28
+smsg:0x7608fc,len:28
 
-01 00 00 00 50 00 00 00  01 00 00 00 41 B1 83 00
-E5 B1 83 00 70 89 86 00  B0 8A 86 00 
-smsg:0x8688fc,len:28;elptime::0  ms
+01 00 00 00 50 00 00 00  01 00 00 00 DD 31 73 00
+81 32 73 00 70 09 76 00  B0 0A 76 00 
+smsg:0x7608fc,len:28;elptime::0  ms
 [4mnn_xpush_socktype[0m
-smsg:0x86895c,len:28
+smsg:0x76095c,len:28
 
-02 00 00 00 50 00 00 00  01 00 00 00 41 B1 83 00
-E5 B1 83 00 30 89 86 00  10 89 86 00 
-smsg:0x86895c,len:28;elptime::0  ms
+02 00 00 00 50 00 00 00  01 00 00 00 DD 31 73 00
+81 32 73 00 30 09 76 00  10 09 76 00 
+smsg:0x76095c,len:28;elptime::0  ms
 [4mnn_pull_socktype[0m
-smsg:0x86891c,len:28
+smsg:0x76091c,len:28
 
-01 00 00 00 51 00 00 00  02 00 00 00 D3 AC 83 00
-77 AD 83 00 50 89 86 00  70 89 86 00 
-smsg:0x86891c,len:28;elptime::0  ms
+01 00 00 00 51 00 00 00  02 00 00 00 6F 2D 73 00
+13 2E 73 00 50 09 76 00  70 09 76 00 
+smsg:0x76091c,len:28;elptime::0  ms
 [4mnn_xpull_socktype[0m
-smsg:0x86893c,len:28
+smsg:0x76093c,len:28
 
-02 00 00 00 51 00 00 00  02 00 00 00 D3 AC 83 00
-77 AD 83 00 D0 8A 86 00  30 89 86 00 
-smsg:0x86893c,len:28;elptime::0  ms
+02 00 00 00 51 00 00 00  02 00 00 00 6F 2D 73 00
+13 2E 73 00 D0 0A 76 00  30 09 76 00 
+smsg:0x76093c,len:28;elptime::0  ms
 [4mnn_respondent_socktype[0m
-smsg:0x868abc,len:28
+smsg:0x760abc,len:28
 
-01 00 00 00 63 00 00 00  00 00 00 00 26 06 84 00
-4C 20 84 00 F0 8A 86 00  50 89 86 00 
-smsg:0x868abc,len:28;elptime::0  ms
+01 00 00 00 63 00 00 00  00 00 00 00 C2 86 73 00
+E8 A0 73 00 F0 0A 76 00  50 09 76 00 
+smsg:0x760abc,len:28;elptime::0  ms
 [4mnn_surveyor_socktype[0m
-smsg:0x868adc,len:28
+smsg:0x760adc,len:28
 
-01 00 00 00 62 00 00 00  00 00 00 00 5A 16 84 00
-79 26 84 00 10 8B 86 00  D0 8A 86 00 
-smsg:0x868adc,len:28;elptime::0  ms
+01 00 00 00 62 00 00 00  00 00 00 00 F6 96 73 00
+15 A7 73 00 10 0B 76 00  D0 0A 76 00 
+smsg:0x760adc,len:28;elptime::0  ms
 [4mnn_xrespondent_socktype[0m
-smsg:0x868afc,len:28
+smsg:0x760afc,len:28
 
-02 00 00 00 63 00 00 00  00 00 00 00 A8 1F 84 00
-4C 20 84 00 30 8B 86 00  F0 8A 86 00 
-smsg:0x868afc,len:28;elptime::0  ms
+02 00 00 00 63 00 00 00  00 00 00 00 44 A0 73 00
+E8 A0 73 00 30 0B 76 00  F0 0A 76 00 
+smsg:0x760afc,len:28;elptime::0  ms
 [4mnn_xsurveyor_socktype[0m
-smsg:0x868b1c,len:28
+smsg:0x760b1c,len:28
 
-02 00 00 00 62 00 00 00  00 00 00 00 D5 25 84 00
-79 26 84 00 D0 88 86 00  10 8B 86 00 
-smsg:0x868b1c,len:28;elptime::0  ms
+02 00 00 00 62 00 00 00  00 00 00 00 71 A6 73 00
+15 A7 73 00 D0 08 76 00  10 0B 76 00 
+smsg:0x760b1c,len:28;elptime::0  ms
 [4mnn_bus_socktype[0m
-smsg:0x8688bc,len:28
+smsg:0x7608bc,len:28
 
-01 00 00 00 70 00 00 00  00 00 00 00 C3 A2 83 00
-4C A9 83 00 F0 88 86 00  30 8B 86 00 
-smsg:0x8688bc,len:28;elptime::0  ms
+01 00 00 00 70 00 00 00  00 00 00 00 5F 23 73 00
+E8 29 73 00 F0 08 76 00  30 0B 76 00 
+smsg:0x7608bc,len:28;elptime::0  ms
 [4mnn_xbus_socktype[0m
-smsg:0x8688dc,len:28
+smsg:0x7608dc,len:28
 
-02 00 00 00 70 00 00 00  00 00 00 00 A8 A8 83 00
-4C A9 83 00 00 00 00 00  D0 88 86 00 
-smsg:0x8688dc,len:28;elptime::0  ms
+02 00 00 00 70 00 00 00  00 00 00 00 44 29 73 00
+E8 29 73 00 00 00 00 00  D0 08 76 00 
+smsg:0x7608dc,len:28;elptime::0  ms
 [nn_mutex_init] size:24
 [4mnn_mutext_t self[0m
-smsg:0x868e58,len:24
+smsg:0x760e58,len:24
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  
-smsg:0x868e58,len:24;elptime::0  ms
+smsg:0x760e58,len:24;elptime::0  ms
 [4m&self->mutex[0m
-smsg:0x868e58,len:24
+smsg:0x760e58,len:24
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  
-smsg:0x868e58,len:24;elptime::0  ms
+smsg:0x760e58,len:24;elptime::0  ms
 [4mnn_mutext_t self[0m
-smsg:0x868ec0,len:24
+smsg:0x760ec0,len:24
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  
-smsg:0x868ec0,len:24;elptime::0  ms
+smsg:0x760ec0,len:24;elptime::0  ms
 [4m&self->mutex[0m
-smsg:0x868ec0,len:24
+smsg:0x760ec0,len:24
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  
-smsg:0x868ec0,len:24;elptime::0  ms
+smsg:0x760ec0,len:24;elptime::0  ms
 [4mnn_mutext_t self[0m
-smsg:0x868c80,len:24
+smsg:0x760c80,len:24
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  
-smsg:0x868c80,len:24;elptime::0  ms
+smsg:0x760c80,len:24;elptime::0  ms
 [4m&self->mutex[0m
-smsg:0x868c80,len:24
+smsg:0x760c80,len:24
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  
-smsg:0x868c80,len:24;elptime::0  ms
+smsg:0x760c80,len:24;elptime::0  ms
 [4mnn_mutext_t self[0m
-smsg:0x91f3a30,len:24
+smsg:0x90d6a78,len:24
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  
-smsg:0x91f3a30,len:24;elptime::0  ms
+smsg:0x90d6a78,len:24;elptime::0  ms
 [4m&self->mutex[0m
-smsg:0x91f3a30,len:24
+smsg:0x90d6a78,len:24
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  
-smsg:0x91f3a30,len:24;elptime::0  ms
+smsg:0x90d6a78,len:24;elptime::0  ms
 [nn_mutex_term] size:9
 [4m--rc--[0m
-smsg:0xbf83902c,len:4
+smsg:0xbfae382c,len:4
 
 E7 03 00 00 
-smsg:0xbf83902c,len:4;elptime::0  ms
+smsg:0xbfae382c,len:4;elptime::0  ms
 [4m--rc--[0m
-smsg:0xbf83901c,len:4
+smsg:0xbfae381c,len:4
 
 E7 03 00 00 
-smsg:0xbf83901c,len:4;elptime::0  ms
+smsg:0xbfae381c,len:4;elptime::0  ms
 [4m--rc--[0m
-smsg:0xbf83902c,len:4
+smsg:0xbfae382c,len:4
 
 E7 03 00 00 
-smsg:0xbf83902c,len:4;elptime::0  ms
+smsg:0xbfae382c,len:4;elptime::0  ms
 [nn_random_seed] size:3
 [4mnn_random_state[0m
-smsg:0x868ea8,len:8
+smsg:0x760ea8,len:8
 
-D9 9C A0 E2 07 CC 61 1F  
-smsg:0x868ea8,len:8;elptime::0  ms
+B4 28 BD E2 07 CC 61 1F  
+smsg:0x760ea8,len:8;elptime::0  ms
+[nn_sock_init] size:3
+[4m&self->sndfd[0m
+smsg:0x90d6aa8,len:4
+
+05 00 00 00 
+smsg:0x90d6aa8,len:4;elptime::0  ms
 [nn_socket] size:4
 [4mafter nn_mutex_lock (&self.lock), static struct nn_global self[0m
-smsg:0x868c60,len:576
+smsg:0x760c60,len:576
 
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
@@ -354,11 +378,11 @@ smsg:0x868c60,len:576
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  01 00 00 00 00 00 00 00
-AE 36 00 00 00 00 00 00  01 00 00 00 00 00 00 00
+21 47 00 00 00 00 00 00  01 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 00 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00
 
-smsg:0x868c60,len:576;elptime::0  ms
+smsg:0x760c60,len:576;elptime::0  ms
 errno:0
-save mlog to file[./mlog.all.txt], size:6, done!!
+save mlog to file[./mlog.all.txt], size:8, done!!

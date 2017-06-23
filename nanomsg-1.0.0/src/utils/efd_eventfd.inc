@@ -23,12 +23,20 @@
 
 #include "err.h"
 #include "closefd.h"
+#include "../mlog/mlog_init.h"
 
 #include <sys/eventfd.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdint.h>
 
+/*============================================
+* FuncName    : nn_efd_init
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_efd_init (struct nn_efd *self)
 {
     int rc;
@@ -44,10 +52,18 @@ int nn_efd_init (struct nn_efd *self)
         flags = 0;
     rc = fcntl (self->efd, F_SETFL, flags | O_NONBLOCK);
     errno_assert (rc != -1);
+    mlog_msgbyfunc(&self->efd,sizeof(self->efd),"self->efd 0");
 
     return 0;
 }
 
+/*============================================
+* FuncName    : nn_efd_term
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_efd_term (struct nn_efd *self)
 {
     int fd = self->efd;
@@ -55,16 +71,37 @@ void nn_efd_term (struct nn_efd *self)
     nn_closefd (fd);
 }
 
+/*============================================
+* FuncName    : nn_efd_stop
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_efd_stop (struct nn_efd *self)
 {
     nn_efd_signal (self);
 }
 
+/*============================================
+* FuncName    : nn_efd_getfd
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 nn_fd nn_efd_getfd (struct nn_efd *self)
 {
     return self->efd;
 }
 
+/*============================================
+* FuncName    : nn_efd_signal
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_efd_signal (struct nn_efd *self)
 {
     const uint64_t one = 1;
@@ -78,6 +115,13 @@ void nn_efd_signal (struct nn_efd *self)
     errno_assert (nbytes == sizeof (one));
 }
 
+/*============================================
+* FuncName    : nn_efd_unsignal
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_efd_unsignal (struct nn_efd *self)
 {
     uint64_t count;
@@ -91,3 +135,4 @@ void nn_efd_unsignal (struct nn_efd *self)
     errno_assert (sz >= 0);
     nn_assert (sz == sizeof (count));
 }
+

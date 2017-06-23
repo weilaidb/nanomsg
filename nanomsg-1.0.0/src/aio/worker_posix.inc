@@ -33,6 +33,15 @@
 /*  Private functions. */
 static void nn_worker_routine (void *arg);
 
+/*============================================
+* FuncName    : nn_worker_fd_init
+* Description : 
+* @self       : 
+* @src        : 
+* @owner      : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_fd_init (struct nn_worker_fd *self, int src,
     struct nn_fsm *owner)
 {
@@ -40,51 +49,133 @@ void nn_worker_fd_init (struct nn_worker_fd *self, int src,
     self->owner = owner;
 }
 
+/*============================================
+* FuncName    : nn_worker_fd_term
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_fd_term (NN_UNUSED struct nn_worker_fd *self)
 {
 }
 
+/*============================================
+* FuncName    : nn_worker_add_fd
+* Description : 
+* @self       : 
+* @s          : 
+* @fd         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_add_fd (struct nn_worker *self, int s, struct nn_worker_fd *fd)
 {
     nn_poller_add (&self->poller, s, &fd->hndl);
 }
 
+/*============================================
+* FuncName    : nn_worker_rm_fd
+* Description : 
+* @self       : 
+* @fd         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_rm_fd (struct nn_worker *self, struct nn_worker_fd *fd)
 {
     nn_poller_rm (&self->poller, &fd->hndl);
 }
 
+/*============================================
+* FuncName    : nn_worker_set_in
+* Description : 
+* @self       : 
+* @fd         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_set_in (struct nn_worker *self, struct nn_worker_fd *fd)
 {
     nn_poller_set_in (&self->poller, &fd->hndl);
 }
 
+/*============================================
+* FuncName    : nn_worker_reset_in
+* Description : 
+* @self       : 
+* @fd         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_reset_in (struct nn_worker *self, struct nn_worker_fd *fd)
 {
     nn_poller_reset_in (&self->poller, &fd->hndl);
 }
 
+/*============================================
+* FuncName    : nn_worker_set_out
+* Description : 
+* @self       : 
+* @fd         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_set_out (struct nn_worker *self, struct nn_worker_fd *fd)
 {
     nn_poller_set_out (&self->poller, &fd->hndl);
 }
 
+/*============================================
+* FuncName    : nn_worker_reset_out
+* Description : 
+* @self       : 
+* @fd         : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_reset_out (struct nn_worker *self, struct nn_worker_fd *fd)
 {
     nn_poller_reset_out (&self->poller, &fd->hndl);
 }
 
+/*============================================
+* FuncName    : nn_worker_add_timer
+* Description : 
+* @self       : 
+* @timeout    : 
+* @timer      : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_add_timer (struct nn_worker *self, int timeout,
     struct nn_worker_timer *timer)
 {
     nn_timerset_add (&self->timerset, timeout, &timer->hndl);
 }
 
+/*============================================
+* FuncName    : nn_worker_rm_timer
+* Description : 
+* @self       : 
+* @timer      : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_rm_timer (struct nn_worker *self, struct nn_worker_timer *timer)
 {
     nn_timerset_rm (&self->timerset, &timer->hndl);
 }
 
+/*============================================
+* FuncName    : nn_worker_task_init
+* Description : 
+* @self       : 
+* @src        : 
+* @owner      : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_task_init (struct nn_worker_task *self, int src,
     struct nn_fsm *owner)
 {
@@ -93,11 +184,25 @@ void nn_worker_task_init (struct nn_worker_task *self, int src,
     nn_queue_item_init (&self->item);
 }
 
+/*============================================
+* FuncName    : nn_worker_task_term
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_task_term (struct nn_worker_task *self)
 {
     nn_queue_item_term (&self->item);
 }
 
+/*============================================
+* FuncName    : nn_worker_init
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 int nn_worker_init (struct nn_worker *self)
 {
     int rc;
@@ -118,6 +223,13 @@ int nn_worker_init (struct nn_worker *self)
     return 0;
 }
 
+/*============================================
+* FuncName    : nn_worker_term
+* Description : 
+* @self       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_term (struct nn_worker *self)
 {
     /*  Ask worker thread to terminate. */
@@ -138,6 +250,14 @@ void nn_worker_term (struct nn_worker *self)
     nn_mutex_term (&self->sync);
 }
 
+/*============================================
+* FuncName    : nn_worker_execute
+* Description : 
+* @self       : 
+* @task       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_execute (struct nn_worker *self, struct nn_worker_task *task)
 {
     nn_mutex_lock (&self->sync);
@@ -146,6 +266,14 @@ void nn_worker_execute (struct nn_worker *self, struct nn_worker_task *task)
     nn_mutex_unlock (&self->sync);
 }
 
+/*============================================
+* FuncName    : nn_worker_cancel
+* Description : 
+* @self       : 
+* @task       : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 void nn_worker_cancel (struct nn_worker *self, struct nn_worker_task *task)
 {
     nn_mutex_lock (&self->sync);
@@ -153,6 +281,13 @@ void nn_worker_cancel (struct nn_worker *self, struct nn_worker_task *task)
     nn_mutex_unlock (&self->sync);
 }
 
+/*============================================
+* FuncName    : nn_worker_routine
+* Description : 
+* @arg        : 
+* Author      : 
+* Time        : 2017-06-24
+============================================*/
 static void nn_worker_routine (void *arg)
 {
     int rc;
@@ -250,4 +385,5 @@ static void nn_worker_routine (void *arg)
         }
     }
 }
+
 
