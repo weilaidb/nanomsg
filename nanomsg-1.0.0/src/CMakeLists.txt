@@ -239,6 +239,14 @@ set (NN_SOURCES
     transports/ws/ws_handshake.c
     transports/ws/sha1.h
     transports/ws/sha1.c
+	
+	mlog/cvector.c
+	mlog/memorylog.h
+	mlog/rbtree.c
+	mlog/rbtree.h
+	mlog/memorylog.c
+	mlog/cvector.h
+
 )
 
 if (WIN32)

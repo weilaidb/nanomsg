@@ -23,6 +23,7 @@
 
 #include "mutex.h"
 #include "err.h"
+#include "../mlog/mlog_init.h"
 
 #include <stdlib.h>
 
@@ -71,12 +72,14 @@ void nn_mutex_init (nn_mutex_t *self)
     rc = pthread_mutex_init (&self->mutex, NULL);
     errnum_assert (rc == 0, rc);
     pthread_mutexattr_destroy(&attr);
+    mlog_msgbyfunc(self, sizeof(*self), "nn_mutext_t self");
+    mlog_msgbyfunc(&self->mutex, sizeof(self->mutex), "&self->mutex");
 }
 
 void nn_mutex_term (nn_mutex_t *self)
 {
-    int rc;
-
+    int rc = 999;
+    mlog_msgbyfunc(&rc, sizeof(rc), "--rc--");
     rc = pthread_mutex_destroy (&self->mutex);
     errnum_assert (rc == 0, rc);
 }

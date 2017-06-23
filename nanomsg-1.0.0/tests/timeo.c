@@ -25,9 +25,13 @@
 
 #include "testutil.h"
 #include "../src/utils/stopwatch.c"
+#include "../src/mlog/mlog_init.h"
 
 int main ()
 {
+    printf("i am here, _F-L-F:%s-%u-%s\n", __FUNCTION__, __LINE__,
+        __FILE__);
+
     int rc;
     int s;
     int timeo;
@@ -36,11 +40,13 @@ int main ()
     uint64_t elapsed;
 
     s = test_socket (AF_SP, NN_PAIR);
-
+    mlog_byfunc("s:%u", s);
     timeo = 100;
+    mlog_byfunc("timeo:%u", timeo);
     rc = nn_setsockopt (s, NN_SOL_SOCKET, NN_RCVTIMEO, &timeo, sizeof (timeo));
     errno_assert (rc == 0);
     nn_stopwatch_init (&stopwatch);
+    mlog_msgbyfunc(&stopwatch,sizeof(stopwatch),"stop watch");
     rc = nn_recv (s, buf, sizeof (buf), 0);
     elapsed = nn_stopwatch_term (&stopwatch);
     errno_assert (rc < 0 && nn_errno () == ETIMEDOUT);
@@ -56,6 +62,12 @@ int main ()
     time_assert (elapsed, 100000);
 
     test_close (s);
+    
+
+    showmlogkeys();
+    showmlogall();
+    int color = 100;
+    printf("\033[7m%dHello, world.\033[0m", color);
 
     return 0;
 }

@@ -26,6 +26,10 @@
 #include "../src/reqrep.h"
 
 #include "testutil.h"
+#include <string.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
 
 /*
  * Nanomsg never zero copies anymore - it used to be an attribute of
@@ -206,6 +210,7 @@ void test_reallocmsg_pubsub ()
 
 int main ()
 {
+    printf("i am here\n");
 #if 0
     test_allocmsg_reqrep ();
     test_reallocmsg_reqrep ();

@@ -23,6 +23,7 @@
 #include "random.h"
 #include "clock.h"
 #include "fast.h"
+#include "../mlog/mlog_init.h"
 
 #ifdef NN_HAVE_WINDOWS
 #include "win.h"
@@ -49,6 +50,7 @@ void nn_random_seed ()
         the exact timestamp and process ID. */
     memcpy (&nn_random_state, "\xfa\x9b\x23\xe3\x07\xcc\x61\x1f", 8);
     nn_random_state ^= pid + nn_clock_ms();
+    mlog_msgbyfunc(&nn_random_state,sizeof(nn_random_state),"nn_random_state");
 }
 
 void nn_random_generate (void *buf, size_t len)
