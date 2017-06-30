@@ -93,7 +93,7 @@ int nn_sock_init (struct nn_sock *self, struct nn_socktype *socktype, int fd)
         memset (&self->sndfd, 0xcd, sizeof (self->sndfd));
     else {
         rc = nn_efd_init (&self->sndfd);
-        mlog_msgbyfunc(&self->sndfd,sizeof(self->sndfd),"&self->sndfd");
+        //mlog_msgbyfunc(&self->sndfd,sizeof(self->sndfd),"&self->sndfd");
         
         if (nn_slow (rc < 0))
             return rc;

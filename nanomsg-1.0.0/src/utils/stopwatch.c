@@ -21,6 +21,8 @@
 */
 
 #include "stopwatch.h"
+#include "../mlog/mlog_init.h"
+
 
 #if defined NN_HAVE_WINDOWS
 
@@ -68,6 +70,7 @@ uint64_t nn_stopwatch_term (struct nn_stopwatch *self)
 
     rc = gettimeofday (&tv, NULL);
     assert (rc == 0);
+    mlog_msgbyfunc(&tv,sizeof(tv),"current time");
     end = (uint64_t) (((uint64_t) tv.tv_sec) * 1000000 + tv.tv_usec);
     return end - self->start;
 }

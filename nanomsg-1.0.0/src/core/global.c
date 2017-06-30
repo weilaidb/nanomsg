@@ -227,7 +227,7 @@ static void nn_global_init (void)
 
     /*  Seed the pseudo-random number generator. */
     nn_random_seed ();
-    mlog_msgbyfunc(&self,sizeof(self),"before self...");
+    //mlog_msgbyfunc(&self,sizeof(self),"before self...");
     /*  Allocate the global table of SP sockets. */
     self.socks = nn_alloc ((sizeof (struct nn_sock*) * NN_MAX_SOCKETS) +
         (sizeof (uint16_t) * NN_MAX_SOCKETS), "socket table");
@@ -251,7 +251,7 @@ static void nn_global_init (void)
     /*  Initialise other parts of the global state. */
     nn_list_init (&self.transports);
     nn_list_init (&self.socktypes);
-    mlog_msgbyfunc(&self,sizeof(self),"after init self...");
+    //mlog_msgbyfunc(&self,sizeof(self),"after init self...");
 
     /*  Plug in individual transports. */
     nn_global_add_transport (nn_inproc);
@@ -259,10 +259,10 @@ static void nn_global_init (void)
     nn_global_add_transport (nn_tcp);
     nn_global_add_transport (nn_ws);
 
-    mlog_msgbyfunc(nn_inproc, sizeof(*nn_inproc), "nn_inproc");
-    mlog_msgbyfunc(nn_ipc, sizeof(*nn_ipc), "nn_ipc");
-    mlog_msgbyfunc(nn_tcp, sizeof(*nn_tcp), "nn_tcp");
-    mlog_msgbyfunc(nn_ws, sizeof(*nn_ws), "nn_ws");
+    //mlog_msgbyfunc(nn_inproc, sizeof(*nn_inproc), "nn_inproc");
+    //mlog_msgbyfunc(nn_ipc, sizeof(*nn_ipc), "nn_ipc");
+    //mlog_msgbyfunc(nn_tcp, sizeof(*nn_tcp), "nn_tcp");
+    //mlog_msgbyfunc(nn_ws, sizeof(*nn_ws), "nn_ws");
 
     /*  Plug in individual socktypes. */
     nn_global_add_socktype (nn_pair_socktype);
@@ -287,26 +287,26 @@ static void nn_global_init (void)
     nn_global_add_socktype (nn_xbus_socktype);
 
 
-    mlog_msgbyfunc(nn_pair_socktype     ,sizeof(*nn_pair_socktype),     "nn_pair_socktype");
-    mlog_msgbyfunc(nn_xpair_socktype        ,sizeof(*nn_xpair_socktype),        "nn_xpair_socktype");
-    mlog_msgbyfunc(nn_pub_socktype      ,sizeof(*nn_pub_socktype),      "nn_pub_socktype");
-    mlog_msgbyfunc(nn_sub_socktype      ,sizeof(*nn_sub_socktype),      "nn_sub_socktype");
-    mlog_msgbyfunc(nn_xpub_socktype     ,sizeof(*nn_xpub_socktype),     "nn_xpub_socktype");
-    mlog_msgbyfunc(nn_xsub_socktype     ,sizeof(*nn_xsub_socktype),     "nn_xsub_socktype");
-    mlog_msgbyfunc(nn_rep_socktype      ,sizeof(*nn_rep_socktype),      "nn_rep_socktype");
-    mlog_msgbyfunc(nn_req_socktype      ,sizeof(*nn_req_socktype),      "nn_req_socktype");
-    mlog_msgbyfunc(nn_xrep_socktype     ,sizeof(*nn_xrep_socktype),     "nn_xrep_socktype");
-    mlog_msgbyfunc(nn_xreq_socktype     ,sizeof(*nn_xreq_socktype),     "nn_xreq_socktype");
-    mlog_msgbyfunc(nn_push_socktype     ,sizeof(*nn_push_socktype),     "nn_push_socktype");
-    mlog_msgbyfunc(nn_xpush_socktype        ,sizeof(*nn_xpush_socktype),        "nn_xpush_socktype");
-    mlog_msgbyfunc(nn_pull_socktype     ,sizeof(*nn_pull_socktype),     "nn_pull_socktype");
-    mlog_msgbyfunc(nn_xpull_socktype        ,sizeof(*nn_xpull_socktype),        "nn_xpull_socktype");
-    mlog_msgbyfunc(nn_respondent_socktype       ,sizeof(*nn_respondent_socktype),       "nn_respondent_socktype");
-    mlog_msgbyfunc(nn_surveyor_socktype     ,sizeof(*nn_surveyor_socktype),     "nn_surveyor_socktype");
-    mlog_msgbyfunc(nn_xrespondent_socktype      ,sizeof(*nn_xrespondent_socktype),      "nn_xrespondent_socktype");
-    mlog_msgbyfunc(nn_xsurveyor_socktype        ,sizeof(*nn_xsurveyor_socktype),        "nn_xsurveyor_socktype");
-    mlog_msgbyfunc(nn_bus_socktype      ,sizeof(*nn_bus_socktype),      "nn_bus_socktype");
-    mlog_msgbyfunc(nn_xbus_socktype     ,sizeof(*nn_xbus_socktype),     "nn_xbus_socktype");
+    //mlog_msgbyfunc(nn_pair_socktype     ,sizeof(*nn_pair_socktype),     "nn_pair_socktype");
+    //mlog_msgbyfunc(nn_xpair_socktype        ,sizeof(*nn_xpair_socktype),        "nn_xpair_socktype");
+    //mlog_msgbyfunc(nn_pub_socktype      ,sizeof(*nn_pub_socktype),      "nn_pub_socktype");
+    //mlog_msgbyfunc(nn_sub_socktype      ,sizeof(*nn_sub_socktype),      "nn_sub_socktype");
+    //mlog_msgbyfunc(nn_xpub_socktype     ,sizeof(*nn_xpub_socktype),     "nn_xpub_socktype");
+    //mlog_msgbyfunc(nn_xsub_socktype     ,sizeof(*nn_xsub_socktype),     "nn_xsub_socktype");
+    //mlog_msgbyfunc(nn_rep_socktype      ,sizeof(*nn_rep_socktype),      "nn_rep_socktype");
+    //mlog_msgbyfunc(nn_req_socktype      ,sizeof(*nn_req_socktype),      "nn_req_socktype");
+    //mlog_msgbyfunc(nn_xrep_socktype     ,sizeof(*nn_xrep_socktype),     "nn_xrep_socktype");
+    //mlog_msgbyfunc(nn_xreq_socktype     ,sizeof(*nn_xreq_socktype),     "nn_xreq_socktype");
+    //mlog_msgbyfunc(nn_push_socktype     ,sizeof(*nn_push_socktype),     "nn_push_socktype");
+    //mlog_msgbyfunc(nn_xpush_socktype        ,sizeof(*nn_xpush_socktype),        "nn_xpush_socktype");
+    //mlog_msgbyfunc(nn_pull_socktype     ,sizeof(*nn_pull_socktype),     "nn_pull_socktype");
+    //mlog_msgbyfunc(nn_xpull_socktype        ,sizeof(*nn_xpull_socktype),        "nn_xpull_socktype");
+    //mlog_msgbyfunc(nn_respondent_socktype       ,sizeof(*nn_respondent_socktype),       "nn_respondent_socktype");
+    //mlog_msgbyfunc(nn_surveyor_socktype     ,sizeof(*nn_surveyor_socktype),     "nn_surveyor_socktype");
+    //mlog_msgbyfunc(nn_xrespondent_socktype      ,sizeof(*nn_xrespondent_socktype),      "nn_xrespondent_socktype");
+    //mlog_msgbyfunc(nn_xsurveyor_socktype        ,sizeof(*nn_xsurveyor_socktype),        "nn_xsurveyor_socktype");
+    //mlog_msgbyfunc(nn_bus_socktype      ,sizeof(*nn_bus_socktype),      "nn_bus_socktype");
+    //mlog_msgbyfunc(nn_xbus_socktype     ,sizeof(*nn_xbus_socktype),     "nn_xbus_socktype");
 
     /*  Start the worker threads. */
     nn_pool_init (&self.pool);
@@ -609,7 +609,7 @@ int nn_socket (int domain, int protocol)
     nn_do_once (&once, nn_lib_init);
 
     nn_mutex_lock (&self.lock);
-    mlog_msgbyfunc(&self,sizeof(self),"after nn_mutex_lock (&self.lock), static struct nn_global self");
+    //mlog_msgbyfunc(&self,sizeof(self),"after nn_mutex_lock (&self.lock), static struct nn_global self");
 
     /*  If nn_term() was already called, return ETERM. */
     if (nn_slow (self.flags & NN_CTX_FLAG_TERM)) {
@@ -617,7 +617,7 @@ int nn_socket (int domain, int protocol)
         errno = ETERM;
         return -1;
     }
-    mlog_byfunc("errno:%u", errno);
+//    mlog_byfunc("errno:%u", errno);
 
     /*  Make sure that global state is initialised. */
     nn_global_init ();
@@ -889,6 +889,10 @@ int nn_send (int s, const void *buf, size_t len, int flags)
     hdr.msg_iovlen = 1;
     hdr.msg_control = NULL;
     hdr.msg_controllen = 0;
+
+    //mlog_msgbyfunc(&hdr,sizeof(hdr),"nn_msghdr");
+    //mlog_msgbyfunc(&iov,sizeof(iov),"nn_iovec");
+    
 
     return nn_sendmsg (s, &hdr, flags);
 }

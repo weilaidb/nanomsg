@@ -52,7 +52,7 @@ int nn_efd_init (struct nn_efd *self)
         flags = 0;
     rc = fcntl (self->efd, F_SETFL, flags | O_NONBLOCK);
     errno_assert (rc != -1);
-    mlog_msgbyfunc(&self->efd,sizeof(self->efd),"self->efd 0");
+//    mlog_msgbyfunc(&self->efd,sizeof(self->efd),"self->efd 0");
 
     return 0;
 }
