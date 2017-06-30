@@ -32,6 +32,7 @@
 #include "options.h"
 #include "../src/utils/sleep.c"
 #include "../src/utils/clock.c"
+#include "../src/mlog/mlog_init.h"
 
 #include <stdio.h>
 #include <string.h>
@@ -309,6 +310,14 @@ struct nn_commandline nn_cli = {
 };
 
 
+/*============================================
+* FuncName    : nn_assert_errno
+* Description : 
+* @flag        : 
+* @description  : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_assert_errno (int flag, char *description)
 {
     int err;
@@ -320,6 +329,14 @@ void nn_assert_errno (int flag, char *description)
     }
 }
 
+/*============================================
+* FuncName    : nn_sub_init
+* Description : 
+* @options    : 
+* @sock       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_sub_init (nn_options_t *options, int sock)
 {
     int i;
@@ -327,7 +344,7 @@ void nn_sub_init (nn_options_t *options, int sock)
 
     if (options->subscriptions.num) {
         for (i = 0; i < options->subscriptions.num; ++i) {
-            rc = nn_setsockopt (sock, NN_SUB, NN_SUB_SUBSCRIBE,
+rc = nn_setsockopt (sock, NN_SUB, NN_SUB_SUBSCRIBE,
                 options->subscriptions.items[i],
                 strlen (options->subscriptions.items[i]));
             nn_assert_errno (rc == 0, "Can't subscribe");
@@ -338,14 +355,29 @@ void nn_sub_init (nn_options_t *options, int sock)
     }
 }
 
+/*============================================
+* FuncName    : nn_set_recv_timeout
+* Description : 
+* @sock       : 
+* @millis     : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_set_recv_timeout (int sock, int millis)
 {
     int rc;
-    rc = nn_setsockopt (sock, NN_SOL_SOCKET, NN_RCVTIMEO,
+rc = nn_setsockopt (sock, NN_SOL_SOCKET, NN_RCVTIMEO,
                        &millis, sizeof (millis));
     nn_assert_errno (rc == 0, "Can't set recv timeout");
 }
 
+/*============================================
+* FuncName    : nn_create_socket
+* Description : 
+* @options    : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 int nn_create_socket (nn_options_t *options)
 {
     int sock;
@@ -358,7 +390,7 @@ int nn_create_socket (nn_options_t *options)
     /* Generic initialization */
     if (options->send_timeout >= 0) {
         millis = (int)(options->send_timeout * 1000);
-        rc = nn_setsockopt (sock, NN_SOL_SOCKET, NN_SNDTIMEO,
+rc = nn_setsockopt (sock, NN_SOL_SOCKET, NN_SNDTIMEO,
                            &millis, sizeof (millis));
         nn_assert_errno (rc == 0, "Can't set send timeout");
     }
@@ -366,7 +398,7 @@ int nn_create_socket (nn_options_t *options)
         nn_set_recv_timeout (sock, (int) options->recv_timeout * 1000);
     }
     if (options->socket_name) {
-        rc = nn_setsockopt (sock, NN_SOL_SOCKET, NN_SOCKET_NAME,
+rc = nn_setsockopt (sock, NN_SOL_SOCKET, NN_SOCKET_NAME,
                            options->socket_name, strlen(options->socket_name));
         nn_assert_errno (rc == 0, "Can't set socket name");
     }
@@ -381,6 +413,15 @@ int nn_create_socket (nn_options_t *options)
     return sock;
 }
 
+/*============================================
+* FuncName    : nn_print_message
+* Description : 
+* @options    : 
+* @buf        : 
+* @buflen     : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_print_message (nn_options_t *options, char *buf, int buflen)
 {
     switch (options->echo_format) {
@@ -454,6 +495,14 @@ void nn_print_message (nn_options_t *options, char *buf, int buflen)
     fflush (stdout);
 }
 
+/*============================================
+* FuncName    : nn_connect_socket
+* Description : 
+* @options    : 
+* @sock       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_connect_socket (nn_options_t *options, int sock)
 {
     int i;
@@ -469,6 +518,14 @@ void nn_connect_socket (nn_options_t *options, int sock)
     }
 }
 
+/*============================================
+* FuncName    : nn_send_loop
+* Description : 
+* @options    : 
+* @sock       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_send_loop (nn_options_t *options, int sock)
 {
     int rc;
@@ -498,6 +555,14 @@ void nn_send_loop (nn_options_t *options, int sock)
     }
 }
 
+/*============================================
+* FuncName    : nn_recv_loop
+* Description : 
+* @options    : 
+* @sock       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_recv_loop (nn_options_t *options, int sock)
 {
     int rc;
@@ -517,6 +582,14 @@ void nn_recv_loop (nn_options_t *options, int sock)
     }
 }
 
+/*============================================
+* FuncName    : nn_rw_loop
+* Description : 
+* @options    : 
+* @sock       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_rw_loop (nn_options_t *options, int sock)
 {
     int rc;
@@ -529,7 +602,7 @@ void nn_rw_loop (nn_options_t *options, int sock)
 
     for (;;) {
         start_time = nn_clock_ms();
-        rc = nn_send (sock,
+rc = nn_send (sock,
             options->data_to_send.data, options->data_to_send.length,
             0);
         if (rc < 0 && errno == EAGAIN) {
@@ -570,6 +643,14 @@ void nn_rw_loop (nn_options_t *options, int sock)
     }
 }
 
+/*============================================
+* FuncName    : nn_resp_loop
+* Description : 
+* @options    : 
+* @sock       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_resp_loop (nn_options_t *options, int sock)
 {
     int rc;
@@ -584,7 +665,7 @@ void nn_resp_loop (nn_options_t *options, int sock)
         }
         nn_print_message (options, buf, rc);
         nn_freemsg (buf);
-        rc = nn_send (sock,
+rc = nn_send (sock,
             options->data_to_send.data, options->data_to_send.length,
             0);
         if (rc < 0 && errno == EAGAIN) {
@@ -594,9 +675,34 @@ void nn_resp_loop (nn_options_t *options, int sock)
         }
     }
 }
+void func3()  
+{  
+    printf("Exit sucessful..\n");  
+}  
 
-int main (int argc, char **argv)
+void showmlogs()
 {
+    showmlogkeys();
+//    showmlogbyname("main");
+    showmlogall();
+
+}
+
+
+/*============================================
+* FuncName    : main
+* Description : 
+* @argc       : 
+* @argv       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
+int main (int argc, char **argv)
+{   
+    mlog_byfunc("~~app begin~~~");
+    atexit(func3); 
+    atexit(showmlogs); 
+    
     int sock;
     nn_options_t options = {
         /* verbose           */ 0,
@@ -615,7 +721,10 @@ int main (int argc, char **argv)
 
     nn_parse_options (&nn_cli, &options, argc, argv);
     sock = nn_create_socket (&options);
+    mlog_byfunc("sock:%d",sock);
+    mlog_msgbyfunc(&options,sizeof(options),"options");
     nn_connect_socket (&options, sock);
+    mlog_byfunc("nn_sleep send_delay:%d",options.send_delay);
     nn_sleep((int)(options.send_delay*1000));
     switch (options.socket_type) {
     case NN_PUB:
@@ -650,5 +759,12 @@ int main (int argc, char **argv)
 
     nn_close (sock);
     nn_free_options(&nn_cli, &options);
+
+    mlog_byfunc("~~app end");
+
+    showmlogkeys();
+    showmlogbyname(__FUNCTION__);
+    
     return 0;
 }
+

@@ -23,6 +23,8 @@
 #include "options.h"
 
 #include "../src/utils/err.c"
+#include "../src/mlog/mlog_init.h"
+
 
 #include <string.h>
 #include <stdio.h>
@@ -47,6 +49,13 @@ struct nn_parse_context {
     char **last_option_usage;
 };
 
+/*============================================
+* FuncName    : nn_has_arg
+* Description : 
+* @opt        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static int nn_has_arg (struct nn_option *opt)
 {
     switch (opt->type) {
@@ -68,6 +77,14 @@ static int nn_has_arg (struct nn_option *opt)
     nn_assert (0);
 }
 
+/*============================================
+* FuncName    : nn_print_usage
+* Description : 
+* @ctx        : 
+* @stream     : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_print_usage (struct nn_parse_context *ctx, FILE *stream)
 {
     int i;
@@ -131,6 +148,15 @@ static void nn_print_usage (struct nn_parse_context *ctx, FILE *stream)
     fprintf (stream, "[options] \n");  /* There may be long options too */
 }
 
+/*============================================
+* FuncName    : nn_print_line
+* Description : 
+* @out        : 
+* @str        : 
+* @width      : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static char *nn_print_line (FILE *out, char *str, size_t width)
 {
     size_t i;
@@ -148,6 +174,14 @@ static char *nn_print_line (FILE *out, char *str, size_t width)
     return "";
 }
 
+/*============================================
+* FuncName    : nn_print_help
+* Description : 
+* @ctx        : 
+* @stream     : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_print_help (struct nn_parse_context *ctx, FILE *stream)
 {
     int i;
@@ -201,6 +235,15 @@ static void nn_print_help (struct nn_parse_context *ctx, FILE *stream)
     }
 }
 
+/*============================================
+* FuncName    : nn_print_option
+* Description : 
+* @ctx        : 
+* @opt_index  : 
+* @stream     : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_print_option (struct nn_parse_context *ctx, int opt_index,
                             FILE *stream)
 {
@@ -232,6 +275,15 @@ static void nn_print_option (struct nn_parse_context *ctx, int opt_index,
     }
 }
 
+/*============================================
+* FuncName    : nn_option_error
+* Description : 
+* @message    : 
+* @ctx        : 
+* @opt_index  : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_option_error (char *message, struct nn_parse_context *ctx,
                      int opt_index)
 {
@@ -242,12 +294,28 @@ static void nn_option_error (char *message, struct nn_parse_context *ctx,
 }
 
 
+/*============================================
+* FuncName    : nn_memory_error
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_memory_error (struct nn_parse_context *ctx) {
     fprintf (stderr, "%s: Memory error while parsing command-line",
         ctx->argv[0]);
     abort ();
 }
 
+/*============================================
+* FuncName    : nn_invalid_enum_value
+* Description : 
+* @ctx        : 
+* @opt_index  : 
+* @argument   : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_invalid_enum_value (struct nn_parse_context *ctx,
     int opt_index, char *argument)
 {
@@ -265,6 +333,14 @@ static void nn_invalid_enum_value (struct nn_parse_context *ctx,
     exit (1);
 }
 
+/*============================================
+* FuncName    : nn_option_conflict
+* Description : 
+* @ctx        : 
+* @opt_index  : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_option_conflict (struct nn_parse_context *ctx,
                               int opt_index)
 {
@@ -300,6 +376,14 @@ static void nn_option_conflict (struct nn_parse_context *ctx,
     exit (1);
 }
 
+/*============================================
+* FuncName    : nn_print_requires
+* Description : 
+* @ctx        : 
+* @mask       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_print_requires (struct nn_parse_context *ctx, unsigned long mask)
 {
     int i;
@@ -319,6 +403,14 @@ static void nn_print_requires (struct nn_parse_context *ctx, unsigned long mask)
     exit (1);
 }
 
+/*============================================
+* FuncName    : nn_option_requires
+* Description : 
+* @ctx        : 
+* @opt_index  : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_option_requires (struct nn_parse_context *ctx, int opt_index) {
     fprintf (stderr, "%s: Option", ctx->argv[0]);
     nn_print_option (ctx, opt_index, stderr);
@@ -328,6 +420,15 @@ static void nn_option_requires (struct nn_parse_context *ctx, int opt_index) {
     exit (1);
 }
 
+/*============================================
+* FuncName    : nn_append_string
+* Description : 
+* @ctx        : 
+* @opt        : 
+* @str        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_append_string (struct nn_parse_context *ctx,
                              struct nn_option *opt, char *str)
 {
@@ -350,6 +451,15 @@ static void nn_append_string (struct nn_parse_context *ctx,
     lst->items [lst->num - 1] = str;
 }
 
+/*============================================
+* FuncName    : nn_append_string_to_free
+* Description : 
+* @ctx        : 
+* @opt        : 
+* @str        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_append_string_to_free (struct nn_parse_context *ctx,
                                       struct nn_option *opt, char *str)
 {
@@ -373,6 +483,15 @@ static void nn_append_string_to_free (struct nn_parse_context *ctx,
     lst->to_free [lst->to_free_num - 1] = str;
 }
 
+/*============================================
+* FuncName    : nn_process_option
+* Description : 
+* @ctx        : 
+* @opt_index  : 
+* @argument   : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_process_option (struct nn_parse_context *ctx,
                               int opt_index, char *argument)
 {
@@ -525,12 +644,20 @@ static void nn_process_option (struct nn_parse_context *ctx,
     abort ();
 }
 
+/*============================================
+* FuncName    : nn_parse_arg0
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_parse_arg0 (struct nn_parse_context *ctx)
 {
     int i;
     struct nn_option *opt;
     char *arg0;
 
+    mlog_byfunc("ctx->argv[0]:%s",ctx->argv[0]);
     arg0 = strrchr (ctx->argv[0], '/');
     if (arg0 == NULL) {
         arg0 = ctx->argv[0];
@@ -539,19 +666,32 @@ static void nn_parse_arg0 (struct nn_parse_context *ctx)
     }
 
 
+    mlog_byfunc("arg0:%s",arg0);
+
     for (i = 0;; ++i) {
         opt = &ctx->options[i];
+        mlog_byfunc("opt->longname:%s",opt->longname);
         if (!opt->longname)
             return;
+        mlog_byfunc("opt->arg0name:%p",opt->arg0name);
+        mlog_byfunc("opt->arg0name:%s",opt->arg0name);
         if (opt->arg0name && !strcmp (arg0, opt->arg0name)) {
             assert (!nn_has_arg (opt));
             ctx->last_option_usage[i] = ctx->argv[0];
+            mlog_byfunc("ctx->last_option_usage[i]:%s",ctx->last_option_usage[i]);
             nn_process_option (ctx, i, NULL);
         }
     }
 }
 
 
+/*============================================
+* FuncName    : nn_error_ambiguous_option
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_error_ambiguous_option (struct nn_parse_context *ctx)
 {
     struct nn_option *opt;
@@ -573,12 +713,26 @@ static void nn_error_ambiguous_option (struct nn_parse_context *ctx)
     exit (1);
 }
 
+/*============================================
+* FuncName    : nn_error_unknown_long_option
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_error_unknown_long_option (struct nn_parse_context *ctx)
 {
     fprintf (stderr, "%s: Unknown option ``%s''\n", ctx->argv[0], ctx->data);
     exit (1);
 }
 
+/*============================================
+* FuncName    : nn_error_unexpected_argument
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_error_unexpected_argument (struct nn_parse_context *ctx)
 {
     fprintf (stderr, "%s: Unexpected argument ``%s''\n",
@@ -586,14 +740,29 @@ static void nn_error_unexpected_argument (struct nn_parse_context *ctx)
     exit (1);
 }
 
+/*============================================
+* FuncName    : nn_error_unknown_short_option
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_error_unknown_short_option (struct nn_parse_context *ctx)
 {
     fprintf (stderr, "%s: Unknown option ``-%c''\n", ctx->argv[0], *ctx->data);
     exit (1);
 }
 
+/*============================================
+* FuncName    : nn_get_arg
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static int nn_get_arg (struct nn_parse_context *ctx)
 {
+    mlog_msgbyfunc(ctx,sizeof(*ctx),"ctx nn_get_arg");
     if (!ctx->args_left)
         return 0;
     ctx->args_left -= 1;
@@ -602,6 +771,13 @@ static int nn_get_arg (struct nn_parse_context *ctx)
     return 1;
 }
 
+/*============================================
+* FuncName    : nn_parse_long_option
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_parse_long_option (struct nn_parse_context *ctx)
 {
     struct nn_option *opt;
@@ -667,6 +843,13 @@ finish:
     }
 }
 
+/*============================================
+* FuncName    : nn_parse_short_option
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_parse_short_option (struct nn_parse_context *ctx)
 {
     int i;
@@ -702,8 +885,16 @@ static void nn_parse_short_option (struct nn_parse_context *ctx)
 }
 
 
+/*============================================
+* FuncName    : nn_parse_arg
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 static void nn_parse_arg (struct nn_parse_context *ctx)
 {
+    mlog_byfunc("ctx->data:%s",ctx->data);
     if (ctx->data[0] == '-') {  /* an option */
         if (ctx->data[1] == '-') {  /* long option */
             if (ctx->data[2] == 0) {  /* end of options */
@@ -721,6 +912,13 @@ static void nn_parse_arg (struct nn_parse_context *ctx)
     }
 }
 
+/*============================================
+* FuncName    : nn_check_requires
+* Description : 
+* @ctx        : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_check_requires (struct nn_parse_context *ctx) {
     int i;
     struct nn_option *opt;
@@ -745,6 +943,16 @@ void nn_check_requires (struct nn_parse_context *ctx) {
     }
 }
 
+/*============================================
+* FuncName    : nn_parse_options
+* Description : 
+* @cline      : 
+* @target     : 
+* @argc       : 
+* @argv       : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_parse_options (struct nn_commandline *cline,
     void *target, int argc, char **argv)
 {
@@ -757,8 +965,11 @@ void nn_parse_options (struct nn_commandline *cline,
     ctx.argc = argc;
     ctx.argv = argv;
     ctx.requires = cline->required_options;
+    mlog_msgbyfunc(&ctx,sizeof(ctx),"ctx");
 
-    for (num_options = 0; ctx.options[num_options].longname; ++num_options);
+    for (num_options = 0; ctx.options[num_options].longname; ++num_options)
+        mlog_byfunc("ctx.options[num_options].longname:%s", ctx.options[num_options].longname);
+    mlog_byfunc("num_options:%u", num_options);
     ctx.last_option_usage = calloc (sizeof (char *), num_options);
     if  (!ctx.last_option_usage)
         nn_memory_error (&ctx);
@@ -766,6 +977,7 @@ void nn_parse_options (struct nn_commandline *cline,
     ctx.mask = 0;
     ctx.args_left = argc - 1;
     ctx.arg = argv;
+    mlog_msgbyfunc(&ctx,sizeof(ctx),"ctx 2 ");
 
     nn_parse_arg0 (&ctx);
 
@@ -779,6 +991,14 @@ void nn_parse_options (struct nn_commandline *cline,
 
 }
 
+/*============================================
+* FuncName    : nn_free_options
+* Description : 
+* @cline      : 
+* @target     : 
+* Author      : 
+* Time        : 2017-06-30
+============================================*/
 void nn_free_options (struct nn_commandline *cline, void *target) {
     int i, j;
     struct nn_option *opt;
@@ -819,3 +1039,4 @@ void nn_free_options (struct nn_commandline *cline, void *target) {
         }
     }
 }
+

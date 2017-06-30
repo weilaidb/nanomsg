@@ -311,7 +311,7 @@ unsigned int timeval_diff(struct timeval *tvbegin, struct timeval *tvend)
 
 
 /* variable declare begin */
-unsigned int mlogmaxsize = 100;
+unsigned int mlogmaxsize = 10000;
 /* variable declare end */
 /*
 Set and Get for mlogmaxsize
