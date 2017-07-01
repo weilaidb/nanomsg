@@ -26,6 +26,7 @@
 #include "testutil.h"
 #include "../src/utils/attr.h"
 #include "../src/utils/thread.c"
+#include "../src/mlog/mlog_init.h"
 
 /*  This test checks whether blocking on send/recv works as expected. */
 
@@ -40,27 +41,49 @@ void worker (NN_UNUSED void *arg)
     nn_sleep (100);
 
     test_send (sc, "ABC");
+    mlog_msgbyfunc(&sc, sizeof(sc),"sc :    %p   ", &sc);
 
     /*  Wait 0.1 sec for the main thread to process the previous message
         and block once again. */
     nn_sleep (100);
 
     test_send (sc, "ABC");
+    mlog_msgbyfunc(&sc, sizeof(sc),"sc :    %p   ", &sc);
+    nn_sleep (100);
+
+    test_send (sc, "ABCDEFG");    
+}
+void showmlogs()
+{
+    showmlogkeys();
+//    showmlogbyname("main");
+//    showmlogall();
+    const char * filewithpath = "block.log";
+
+    savemlog2fileall(filewithpath);
+
 }
 
 int main ()
 {
     struct nn_thread thread;
+    atexit(showmlogs);
 
     sb = test_socket (AF_SP, NN_PAIR);
+    
+    mlog_msgbyfunc(&sb, sizeof(sb),"sb :    %p   ", &sb);
     test_bind (sb, SOCKET_ADDRESS);
+    mlog_msgbyfunc(&SOCKET_ADDRESS, sizeof(SOCKET_ADDRESS),"SOCKET_ADDRESS :    %s   ", SOCKET_ADDRESS);
     sc = test_socket (AF_SP, NN_PAIR);
     test_connect (sc, SOCKET_ADDRESS);
+    mlog_msgbyfunc(&sc, sizeof(sc),"sc :    %d   ", sc);
 
     nn_thread_init (&thread, worker, NULL);
+    mlog_msgbyfunc(&thread, sizeof(thread),"thread :    %p   ", &thread);
 
     test_recv (sb, "ABC");
     test_recv (sb, "ABC");
+    test_recv (sb, "ABCDEFG");
 
     nn_thread_term (&thread);
 

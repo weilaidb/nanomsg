@@ -718,6 +718,7 @@ int main (int argc, char **argv)
         /* data_to_send      */ {NULL, 0, 0},
         /* echo_format       */ NN_NO_ECHO
     };
+    mlog_msgbyfunc(&options, sizeof(options),"options :    %p   ", &options);
 
     nn_parse_options (&nn_cli, &options, argc, argv);
     sock = nn_create_socket (&options);
@@ -730,6 +731,8 @@ int main (int argc, char **argv)
     case NN_PUB:
     case NN_PUSH:
         nn_send_loop (&options, sock);
+        
+        mlog_msgbyfunc(&options, sizeof(options),"options :    %p   ", &options);
         break;
     case NN_SUB:
     case NN_PULL:
@@ -737,6 +740,8 @@ int main (int argc, char **argv)
         break;
     case NN_BUS:
     case NN_PAIR:
+        
+        mlog_msgbyfunc(&options.data_to_send.data, sizeof(options.data_to_send.data),"options.data_to_send.data :    %p   ", &options.data_to_send.data);
         if (options.data_to_send.data) {
             nn_rw_loop (&options, sock);
         } else {
@@ -751,14 +756,17 @@ int main (int argc, char **argv)
     case NN_RESPONDENT:
         if (options.data_to_send.data) {
             nn_resp_loop (&options, sock);
+            mlog_msgbyfunc(&sock, sizeof(sock),"sock :    %p   ", &sock);
         } else {
             nn_recv_loop (&options, sock);
+            mlog_msgbyfunc(&sock, sizeof(sock),"sock :    %p   ", &sock);
         }
         break;
     }
 
     nn_close (sock);
     nn_free_options(&nn_cli, &options);
+    mlog_msgbyfunc(&nn_cli, sizeof(nn_cli),"nn_cli :    %p   ", &nn_cli);
 
     mlog_byfunc("~~app end");
 

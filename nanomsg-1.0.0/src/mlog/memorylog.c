@@ -435,14 +435,14 @@ void ParseMsgBody(T_MLOG tlog, FILE *fp)
         unsigned int tnum = 0;
         unsigned int cpos = 0;
         char *rmsg = (char *)tlog.msgaddr;
-        tnum = sprintf(pmsg + cpos, "\n");
+//        tnum = sprintf(pmsg + cpos, "\n");
         for(i = 0; i < msglen; i++)
         {
             j = i + 1;
             if(0 == i)
             {
-                tnum = sprintf(pmsg + cpos, "\n");
-                cpos += tnum;
+//                tnum = sprintf(pmsg + cpos, "\n");
+//                cpos += tnum;
             }
             if(0 == j % 8 && 0 != j % 16)
                 tnum = sprintf(pmsg + cpos, "%02X  ", (unsigned char)rmsg[i]);
@@ -458,6 +458,7 @@ void ParseMsgBody(T_MLOG tlog, FILE *fp)
             }
         }
         fprintf(fp, "%s\n", pmsg);
+        fflush(fp);
         free(pmsg);
     }
 }
@@ -906,7 +907,11 @@ void pushmsgbyname(const char *key, void *msg, unsigned int msglen, char *fmt, .
     vsprintf(buf, fmt, ap);
     va_end(ap);
     memset(&tLog, 0 ,sizeof(tLog));
-    snprintf(tLog.tipsinfo, sizeof(tLog.tipsinfo), "\033[4m%s\033[0m", buf);
+    #ifdef COLOR_SHOW
+    snprintf(tLog.tipsinfo, sizeof(tLog.tipsinfo), "\n\033[4m%s\033[0m", buf);
+    #else
+    snprintf(tLog.tipsinfo, sizeof(tLog.tipsinfo), "\n%s", buf);    
+    #endif
     PushLog(key, &tLog);
     if(NULL != msg || 0!= msglen) // record msg
     {
@@ -920,7 +925,8 @@ void pushmsgbyname(const char *key, void *msg, unsigned int msglen, char *fmt, .
         struct timeval now;
         struct timeval end;
         gettimeofday(&now, NULL);
-        sprintf(buf, "smsg:%p,len:%u",
+        #if 1
+        sprintf(buf, "B:smsg:%p,len:%u",
                 msg, msglen);
         memset(&tLog, 0 ,sizeof(tLog));
         snprintf(tLog.tipsinfo, sizeof(tLog.tipsinfo), "%s", buf);
@@ -929,8 +935,9 @@ void pushmsgbyname(const char *key, void *msg, unsigned int msglen, char *fmt, .
         PushLog(key, &tLog);
         if(!CheckPushLog(key))
             return;
+        #endif
         gettimeofday(&end, NULL);
-        sprintf(buf, "smsg:%p,len:%u;elptime::%-3ums",
+        sprintf(buf, "E:smsg:%p,len:%u;elptime::%-3ums",
                 msg, msglen,timeval_diff(&end, &now));
         memset(&tLog, 0 ,sizeof(tLog));
         snprintf(tLog.tipsinfo, sizeof(tLog.tipsinfo), "%s", buf);

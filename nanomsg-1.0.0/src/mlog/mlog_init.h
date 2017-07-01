@@ -30,7 +30,7 @@ do{\
 do{\
     char key[32];\
     snprintf(key, sizeof(key), "%s", __FUNCTION__);\
-    pushmsgbyname(key,msg, msglen,fmt,##args);\
+    pushmsgbyname(key,msg, msglen,fmt" L:%d",##args, __LINE__);\
 }while(0)
 
 	

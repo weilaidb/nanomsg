@@ -51,7 +51,7 @@ int main (int argc, const char *argv[])
             get_test_port(argc, argv));
     mlog_byfunc("socket_address_tcp:%s ~~~", socket_address_tcp);
     mlog_byfunc("port:%u ~~~", get_test_port(argc, argv));
-    /*  绑定sb 和sc为一对，到SOCKET_ADDRESS  */
+    /*  ??sb ??sc???????SOCKET_ADDRESS  */
 
     sb = test_socket (AF_SP, NN_PAIR);
     mlog_byfunc("sb:%u ~~~", sb);
@@ -70,6 +70,8 @@ int main (int argc, const char *argv[])
         buf1 [i] = (unsigned char) i;
 
     mlog_msgbyfunc(buf1,1024,"after set nn_allocmsg buff1, then send by sc");
+    
+    mlog_msgbyfunc(buf1,1024,"buf1 :    %p   ", buf1);
     rc = nn_send (sc, &buf1, NN_MSG, 0);
     errno_assert (rc >= 0);
     mlog_byfunc("rc:%u", rc);

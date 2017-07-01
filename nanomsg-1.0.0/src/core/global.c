@@ -246,7 +246,10 @@ static void nn_global_init (void)
     self.unused = (uint16_t*) (self.socks + NN_MAX_SOCKETS);
     alloc_assert (self.unused);
     for (i = 0; i != NN_MAX_SOCKETS; ++i)
+        {
         self.unused [i] = NN_MAX_SOCKETS - i - 1;
+        mlog_msgbyfunc(&self.unused[i], sizeof(self.unused[i]),"self.unused[i] :    %p   ", &self.unused[i]);
+        }
 
     /*  Initialise other parts of the global state. */
     nn_list_init (&self.transports);
@@ -258,6 +261,11 @@ static void nn_global_init (void)
     nn_global_add_transport (nn_ipc);
     nn_global_add_transport (nn_tcp);
     nn_global_add_transport (nn_ws);
+    
+    mlog_msgbyfunc(nn_inproc, sizeof(*nn_inproc),"nn_inproc :    %p   ", nn_inproc);
+    mlog_msgbyfunc(nn_ipc, sizeof(*nn_ipc),"nn_ipc :    %p   ", nn_ipc);
+    mlog_msgbyfunc(nn_tcp, sizeof(*nn_tcp),"nn_tcp :    %p   ", nn_tcp);
+    mlog_msgbyfunc(nn_ws, sizeof(*nn_ws),"nn_ws :    %p   ", nn_ws);
 
     //mlog_msgbyfunc(nn_inproc, sizeof(*nn_inproc), "nn_inproc");
     //mlog_msgbyfunc(nn_ipc, sizeof(*nn_ipc), "nn_ipc");
@@ -286,27 +294,26 @@ static void nn_global_init (void)
     nn_global_add_socktype (nn_bus_socktype);
     nn_global_add_socktype (nn_xbus_socktype);
 
-
-    //mlog_msgbyfunc(nn_pair_socktype     ,sizeof(*nn_pair_socktype),     "nn_pair_socktype");
-    //mlog_msgbyfunc(nn_xpair_socktype        ,sizeof(*nn_xpair_socktype),        "nn_xpair_socktype");
-    //mlog_msgbyfunc(nn_pub_socktype      ,sizeof(*nn_pub_socktype),      "nn_pub_socktype");
-    //mlog_msgbyfunc(nn_sub_socktype      ,sizeof(*nn_sub_socktype),      "nn_sub_socktype");
-    //mlog_msgbyfunc(nn_xpub_socktype     ,sizeof(*nn_xpub_socktype),     "nn_xpub_socktype");
-    //mlog_msgbyfunc(nn_xsub_socktype     ,sizeof(*nn_xsub_socktype),     "nn_xsub_socktype");
-    //mlog_msgbyfunc(nn_rep_socktype      ,sizeof(*nn_rep_socktype),      "nn_rep_socktype");
-    //mlog_msgbyfunc(nn_req_socktype      ,sizeof(*nn_req_socktype),      "nn_req_socktype");
-    //mlog_msgbyfunc(nn_xrep_socktype     ,sizeof(*nn_xrep_socktype),     "nn_xrep_socktype");
-    //mlog_msgbyfunc(nn_xreq_socktype     ,sizeof(*nn_xreq_socktype),     "nn_xreq_socktype");
-    //mlog_msgbyfunc(nn_push_socktype     ,sizeof(*nn_push_socktype),     "nn_push_socktype");
-    //mlog_msgbyfunc(nn_xpush_socktype        ,sizeof(*nn_xpush_socktype),        "nn_xpush_socktype");
-    //mlog_msgbyfunc(nn_pull_socktype     ,sizeof(*nn_pull_socktype),     "nn_pull_socktype");
-    //mlog_msgbyfunc(nn_xpull_socktype        ,sizeof(*nn_xpull_socktype),        "nn_xpull_socktype");
-    //mlog_msgbyfunc(nn_respondent_socktype       ,sizeof(*nn_respondent_socktype),       "nn_respondent_socktype");
-    //mlog_msgbyfunc(nn_surveyor_socktype     ,sizeof(*nn_surveyor_socktype),     "nn_surveyor_socktype");
-    //mlog_msgbyfunc(nn_xrespondent_socktype      ,sizeof(*nn_xrespondent_socktype),      "nn_xrespondent_socktype");
-    //mlog_msgbyfunc(nn_xsurveyor_socktype        ,sizeof(*nn_xsurveyor_socktype),        "nn_xsurveyor_socktype");
-    //mlog_msgbyfunc(nn_bus_socktype      ,sizeof(*nn_bus_socktype),      "nn_bus_socktype");
-    //mlog_msgbyfunc(nn_xbus_socktype     ,sizeof(*nn_xbus_socktype),     "nn_xbus_socktype");
+    mlog_msgbyfunc(nn_pair_socktype, sizeof(*nn_pair_socktype),"nn_pair_socktype :    %p   ", nn_pair_socktype);
+    mlog_msgbyfunc(nn_xpair_socktype, sizeof(*nn_xpair_socktype),"nn_xpair_socktype :    %p   ", nn_xpair_socktype);
+    mlog_msgbyfunc(nn_pub_socktype, sizeof(*nn_pub_socktype),"nn_pub_socktype :    %p   ", nn_pub_socktype);
+    mlog_msgbyfunc(nn_sub_socktype, sizeof(*nn_sub_socktype),"nn_sub_socktype :    %p   ", nn_sub_socktype);
+    mlog_msgbyfunc(nn_xpub_socktype, sizeof(*nn_xpub_socktype),"nn_xpub_socktype :    %p   ", nn_xpub_socktype);
+    mlog_msgbyfunc(nn_xsub_socktype, sizeof(*nn_xsub_socktype),"nn_xsub_socktype :    %p   ", nn_xsub_socktype);
+    mlog_msgbyfunc(nn_rep_socktype, sizeof(*nn_rep_socktype),"nn_rep_socktype :    %p   ", nn_rep_socktype);
+    mlog_msgbyfunc(nn_req_socktype, sizeof(*nn_req_socktype),"nn_req_socktype :    %p   ", nn_req_socktype);
+    mlog_msgbyfunc(nn_xrep_socktype, sizeof(*nn_xrep_socktype),"nn_xrep_socktype :    %p   ", nn_xrep_socktype);
+    mlog_msgbyfunc(nn_xreq_socktype, sizeof(*nn_xreq_socktype),"nn_xreq_socktype :    %p   ", nn_xreq_socktype);
+    mlog_msgbyfunc(nn_push_socktype, sizeof(*nn_push_socktype),"nn_push_socktype :    %p   ", nn_push_socktype);
+    mlog_msgbyfunc(nn_xpush_socktype, sizeof(*nn_xpush_socktype),"nn_xpush_socktype :    %p   ", nn_xpush_socktype);
+    mlog_msgbyfunc(nn_pull_socktype, sizeof(*nn_pull_socktype),"nn_pull_socktype :    %p   ", nn_pull_socktype);
+    mlog_msgbyfunc(nn_xpull_socktype, sizeof(*nn_xpull_socktype),"nn_xpull_socktype :    %p   ", nn_xpull_socktype);
+    mlog_msgbyfunc(nn_respondent_socktype, sizeof(*nn_respondent_socktype),"nn_respondent_socktype :    %p   ", nn_respondent_socktype);
+    mlog_msgbyfunc(nn_surveyor_socktype, sizeof(*nn_surveyor_socktype),"nn_surveyor_socktype :    %p   ", nn_surveyor_socktype);
+    mlog_msgbyfunc(nn_xrespondent_socktype, sizeof(*nn_xrespondent_socktype),"nn_xrespondent_socktype :    %p   ", nn_xrespondent_socktype);
+    mlog_msgbyfunc(nn_xsurveyor_socktype, sizeof(*nn_xsurveyor_socktype),"nn_xsurveyor_socktype :    %p   ", nn_xsurveyor_socktype);
+    mlog_msgbyfunc(nn_bus_socktype, sizeof(*nn_bus_socktype),"nn_bus_socktype :    %p   ", nn_bus_socktype);
+    mlog_msgbyfunc(nn_xbus_socktype, sizeof(*nn_xbus_socktype),"nn_xbus_socktype :    %p   ", nn_xbus_socktype);
 
     /*  Start the worker threads. */
     nn_pool_init (&self.pool);
@@ -552,6 +559,8 @@ int nn_global_create_socket (int domain, int protocol)
     if (nn_slow (self.nsocks >= NN_MAX_SOCKETS)) {
         return -EMFILE;
     }
+    mlog_msgbyfunc(&self.nsocks, sizeof(self.nsocks),"self.nsocks :    %p   ", &self.nsocks);
+    mlog_msgbyfunc(&self.unused, NN_MAX_SOCKETS,"self.unused :    %p   ", &self.unused);
 
     /*  Find an empty socket slot. */
     s = self.unused [NN_MAX_SOCKETS - self.nsocks - 1];
@@ -566,9 +575,12 @@ int nn_global_create_socket (int domain, int protocol)
             /*  Instantiate the socket. */
             sock = nn_alloc (sizeof (struct nn_sock), "sock");
             alloc_assert (sock);
+            
+            mlog_msgbyfunc(sock, sizeof(*sock),"sock :    %p   ", sock);
             rc = nn_sock_init (sock, socktype, s);
             if (rc < 0)
                 return rc;
+            mlog_msgbyfunc(sock, sizeof(*sock),"sock :    %p   ", sock);
 
             /*  Adjust the global socket table. */
             self.socks [s] = sock;
@@ -889,6 +901,9 @@ int nn_send (int s, const void *buf, size_t len, int flags)
     hdr.msg_iovlen = 1;
     hdr.msg_control = NULL;
     hdr.msg_controllen = 0;
+    mlog_msgbyfunc(&iov, sizeof(iov),"iov :    %p   ", &iov);
+    mlog_msgbyfunc(&hdr, sizeof(hdr),"hdr :    %p   ", &hdr);
+    mlog_msgbyfunc(&flags, sizeof(flags),"flags :    %p   ", &flags);
 
     //mlog_msgbyfunc(&hdr,sizeof(hdr),"nn_msghdr");
     //mlog_msgbyfunc(&iov,sizeof(iov),"nn_iovec");
@@ -950,6 +965,8 @@ int nn_sendmsg (int s, const struct nn_msghdr *msghdr, int flags)
         errno = -rc;
         return -1;
     }
+    mlog_msgbyfunc(&sock, sizeof(sock),"sock :    %p   ", &sock);
+    mlog_msgbyfunc(&s, sizeof(s),"s :    %p   ", &s);
 
     if (nn_slow (!msghdr)) {
         rc = -EINVAL;
@@ -1447,6 +1464,10 @@ int nn_global_hold_socket_locked(struct nn_sock **sockp, int s)
     if (nn_slow (sock == NULL)) {
         return -EBADF;
     }
+//    mlog_msgbyfunc(&self, sizeof(self),"self :    %p   ", &self);
+//    mlog_msgbyfunc(&self.socks, sizeof(self.socks),"self.socks :    %p   ", &self.socks);
+//    mlog_msgbyfunc(&self.socks[s], sizeof(self.socks[s]),"self.socks[s] :    %p   ", &self.socks[s]);
+//    mlog_msgbyfunc(&s, sizeof(s),"s :    %p   ", &s);
 
     if (nn_slow (nn_sock_hold (sock) != 0)) {
         return -EBADF;
